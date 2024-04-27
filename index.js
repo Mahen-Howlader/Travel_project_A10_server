@@ -2,19 +2,18 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 5000;
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 
 // middleware 
 app.use(cors())
 app.use(express.json());
 
-// 6KofVGk9LS1tBlHL
-// Bangladesh_Tourism
 
+// Travel
+// MwIX9ciiEGQteDH8
 
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.MIONGODB_NAME}:${process.env.MIONGODB_PASSWORD}@cluster0.iagloem.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://Travel:MwIX9ciiEGQteDH8@cluster0.iagloem.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -25,12 +24,28 @@ const client = new MongoClient(uri, {
     }
 });
 
+
+
 async function run() {
+     const travelCollection = client.db("Travel").collection("TouristsSpots");
     try {
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();
         // Send a ping to confirm a successful connection
         // await client.db("admin").command({ ping: 1 });
+
+        app.get("/touristsspots", async (req,res) => {
+                const findData = await travelCollection.find().toArray()
+                res.send(findData)
+                // console.log(findData)
+        })
+
+        app.post("/touristsspots" , async (req,res) => {
+            const data = req.body;
+            const result = await travelCollection.insertOne(data);
+            res.send(result)
+        })
+
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
