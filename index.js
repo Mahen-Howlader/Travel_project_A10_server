@@ -11,9 +11,9 @@ app.use(express.json());
 
 
 // Travel
-// MwIX9ciiEGQteDH8
+// MwIX9ciiEGQteDH8 
 
-const uri = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASSWORD}@cluster0.iagloem.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://Travel:MwIX9ciiEGQteDH8@cluster0.iagloem.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -41,14 +41,6 @@ async function run() {
             res.send(findData)
             // console.log(findData)
         })
-
-        // app.get("/touristsspots/:id", async (req, res) => {
-        //     const id = req.params.id;
-        //     console.log(id)
-        //     const query = { _id: new ObjectId(id) };
-        //     const result = await travelCollection.insertOne(query);
-        //     res.send(result)
-        // })
 
         app.post("/touristsspots", async (req, res) => {
             const data = req.body;
@@ -109,6 +101,7 @@ async function run() {
             res.send(findData)
             // console.log(findData)
         })
+
         // countryToptenInfo
         app.get("/topten",async (req,res) => {
             const findData = await countryToptenInfo.find().toArray()
